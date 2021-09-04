@@ -26,6 +26,8 @@ class LoginFOrmProvider extends ChangeNotifier {
 
 // using the debouncer with setter
   set password(String value) {
+    _success = false;
+    _fail = false;
     if (_password.length < value.length) {
       coveredEyes = true;
     }

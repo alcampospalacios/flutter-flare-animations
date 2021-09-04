@@ -135,7 +135,7 @@ class LoginForm extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 45),
+                  padding: EdgeInsets.symmetric(horizontal: 35),
                   child: TextFormField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     autocorrect: false,
@@ -156,8 +156,11 @@ class LoginForm extends StatelessWidget {
                     },
                   ),
                 ),
+                SizedBox(
+                  height: 15,
+                ),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 45),
+                  padding: EdgeInsets.symmetric(horizontal: 35),
                   child: TextFormField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     autocorrect: false,
@@ -180,15 +183,15 @@ class LoginForm extends StatelessWidget {
                 ),
                 MaterialButton(
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
+                        borderRadius: BorderRadius.circular(20)),
                     disabledColor: Colors.grey,
                     elevation: 0,
                     color: Colors.indigo,
                     child: Container(
                         padding:
-                            EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+                            EdgeInsets.symmetric(horizontal: 120, vertical: 15),
                         child: Text(
-                          'Aceptar',
+                          'Iniciar sesión',
                           style: TextStyle(color: Colors.white),
                         )),
                     onPressed: () {
@@ -197,10 +200,12 @@ class LoginForm extends StatelessWidget {
                       if (loginForm.isValidForm()) {
                         if (loginForm.password == 'admin123')
                           loginForm.success = true;
+                        else
+                          loginForm.fail = true;
                       } else {
                         loginForm.fail = true;
                       }
-                    })
+                    }),
               ],
             )));
   }
