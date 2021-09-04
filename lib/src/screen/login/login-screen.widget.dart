@@ -35,6 +35,8 @@ class _RiveAnimationContainerState extends State<_RiveAnimationContainer> {
   final riveFileName = 'assets/copy_bear.riv';
   Artboard? _artboard;
   bool? coveredEyes;
+  bool success = false;
+  bool fail = false;
 
 // Animation controller
   late RiveAnimationController _animationController;
@@ -68,16 +70,40 @@ class _RiveAnimationContainerState extends State<_RiveAnimationContainer> {
     }
   }
 
+  void onSuccessOrFailAnimation() {
+    if (success && !fail) {
+      _artboard!
+          .addController(_animationController = OneShotAnimation('success'));
+    }
+
+    if (!success && fail) {
+      _artboard!.addController(_animationController = OneShotAnimation('fail'));
+    }
+
+// to avoid infinite animation of success
+    Future.delayed(Duration(seconds: 3), () {
+      _artboard!.removeController(_animationController);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final loginForm = Provider.of<LoginFOrmProvider>(context);
 
+    // listen change of provider
     if (loginForm.coveredEyes != null) {
       if (this.coveredEyes != loginForm.coveredEyes) {
         this.coveredEyes = loginForm.coveredEyes!;
         onChange();
       }
+    }
+
+    // listen change of provider
+    if (loginForm.success || loginForm.fail) {
+      this.success = loginForm.success;
+      this.fail = loginForm.fail;
+      onSuccessOrFailAnimation();
     }
 
     return Container(
@@ -165,7 +191,16 @@ class LoginForm extends StatelessWidget {
                           'Aceptar',
                           style: TextStyle(color: Colors.white),
                         )),
-                    onPressed: () {})
+                    onPressed: () {
+                      FocusScope.of(context).unfocus();
+
+                      if (loginForm.isValidForm()) {
+                        if (loginForm.password == 'admin123')
+                          loginForm.success = true;
+                      } else {
+                        loginForm.fail = true;
+                      }
+                    })
               ],
             )));
   }

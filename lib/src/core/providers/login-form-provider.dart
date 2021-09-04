@@ -12,13 +12,14 @@ class LoginFOrmProvider extends ChangeNotifier {
   final _debouncer = Debouncer(milliseconds: 1000);
 
   // Animation rive controllers
+  bool _success = false;
+  bool _fail = false;
   bool? coveredEyes;
 
 // getters and setters
   String get email => _email;
   set email(String value) {
     this._email = value;
-    print(value);
   }
 
   String get password => _password;
@@ -32,11 +33,24 @@ class LoginFOrmProvider extends ChangeNotifier {
     _password = value;
 
     _debouncer.run(() {
-      print(_password);
       coveredEyes = false;
       notifyListeners();
     });
 
+    notifyListeners();
+  }
+
+  bool get success => _success;
+  set success(bool value) {
+    _success = value;
+    _fail = false;
+    notifyListeners();
+  }
+
+  bool get fail => _fail;
+  set fail(bool value) {
+    _success = false;
+    _fail = value;
     notifyListeners();
   }
 
@@ -47,8 +61,6 @@ class LoginFOrmProvider extends ChangeNotifier {
   }
 
   bool isValidForm() {
-    print(formKey.currentState?.validate());
-
     return formKey.currentState?.validate() ?? false;
   }
 }
