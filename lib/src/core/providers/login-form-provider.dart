@@ -9,7 +9,7 @@ class LoginFOrmProvider extends ChangeNotifier {
   bool _isLoading = false;
 
   // Debouncer
-  final _debouncer = Debouncer(milliseconds: 500);
+  final _debouncer = Debouncer(milliseconds: 1000);
 
   // Animation rive controllers
   bool? coveredEyes;
@@ -25,11 +25,18 @@ class LoginFOrmProvider extends ChangeNotifier {
 
 // using the debouncer with setter
   set password(String value) {
-    coveredEyes = true;
+    if (_password.length < value.length) {
+      coveredEyes = true;
+    }
+
+    _password = value;
+
     _debouncer.run(() {
+      print(_password);
       coveredEyes = false;
       notifyListeners();
     });
+
     notifyListeners();
   }
 
