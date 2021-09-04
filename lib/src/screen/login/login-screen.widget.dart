@@ -1,6 +1,7 @@
 import 'package:flare_animations/src/core/providers/login-form-provider.dart';
 import 'package:flare_animations/src/core/utils/acp-decorations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:rive/rive.dart';
 import 'package:flutter/src/painting/gradient.dart' as gradients;
@@ -30,15 +31,54 @@ class _RiveAnimationContainer extends StatefulWidget {
 }
 
 class _RiveAnimationContainerState extends State<_RiveAnimationContainer> {
+  // Declarations necessary to rive
+  final riveFileName = 'assets/copy_bear.riv';
+  Artboard? _artboard;
+  bool? coveredEyes;
+
+// Animation controller
+  late RiveAnimationController _animationController;
+
   @override
   void initState() {
+    // Init rive animation when the widget is ready
+    _loadRiveFile();
     super.initState();
+  }
+
+  // Loads a Rive file
+  void _loadRiveFile() async {
+    final bytes = await rootBundle.load(riveFileName);
+    RiveFile rFile = RiveFile.import(bytes);
+
+    setState(() => _artboard = rFile.mainArtboard
+      ..addController(
+        _animationController = SimpleAnimation('idle'),
+      ));
+  }
+
+// Changing the animation on controller
+  void onChange() {
+    if (coveredEyes!) {
+      _artboard!
+          .addController(_animationController = SimpleAnimation('hands_up'));
+    } else {
+      _artboard!
+          .addController(_animationController = SimpleAnimation('hands_down'));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final loginForm = Provider.of<LoginFOrmProvider>(context);
+
+    if (loginForm.coveredEyes != null) {
+      if (this.coveredEyes != loginForm.coveredEyes) {
+        this.coveredEyes = loginForm.coveredEyes!;
+        onChange();
+      }
+    }
 
     return Container(
         width: double.infinity,
@@ -48,11 +88,11 @@ class _RiveAnimationContainerState extends State<_RiveAnimationContainer> {
           Color.fromRGBO(63, 63, 156, 1),
           Color.fromRGBO(90, 70, 178, 1)
         ])),
-        child: RiveAnimation.asset(
-          'assets/copy_bear.riv',
-          fit: BoxFit.cover,
-          animations: [loginForm.animationType],
-        ));
+        child: _artboard != null
+            ? Rive(
+                artboard: _artboard!,
+              )
+            : Container());
   }
 }
 

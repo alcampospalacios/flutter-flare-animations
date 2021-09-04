@@ -1,3 +1,4 @@
+import 'package:flare_animations/src/core/helpers/debouncer.dart';
 import 'package:flutter/material.dart';
 
 class LoginFOrmProvider extends ChangeNotifier {
@@ -7,6 +8,12 @@ class LoginFOrmProvider extends ChangeNotifier {
   String _password = '';
   bool _isLoading = false;
 
+  // Debouncer
+  final _debouncer = Debouncer(milliseconds: 500);
+
+  // Animation rive controllers
+  bool? coveredEyes;
+
 // getters and setters
   String get email => _email;
   set email(String value) {
@@ -15,13 +22,16 @@ class LoginFOrmProvider extends ChangeNotifier {
   }
 
   String get password => _password;
-  set password(String value) {
-    this._password = value;
-    print(value);
-  }
 
-  // Animation rive
-  String animationType = 'idle';
+// using the debouncer with setter
+  set password(String value) {
+    coveredEyes = true;
+    _debouncer.run(() {
+      coveredEyes = false;
+      notifyListeners();
+    });
+    notifyListeners();
+  }
 
   bool get isLoading => _isLoading;
   set isLoading(bool value) {
