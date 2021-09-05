@@ -1,5 +1,5 @@
-import 'package:flare_animations/src/core/providers/login-form-provider.dart';
-import 'package:flare_animations/src/core/utils/acp-decorations.dart';
+import 'package:rive_animations/src/core/providers/login-form-provider.dart';
+import 'package:rive_animations/src/core/utils/acp-decorations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';

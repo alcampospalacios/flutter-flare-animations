@@ -1,8 +1,8 @@
 import 'dart:ui';
 
-import 'package:flare_animations/src/core/providers/login-form-provider.dart';
-import 'package:flare_animations/src/core/widgets/acp-widgets.dart';
-import 'package:flare_animations/src/screen/login/login-screen.widget.dart';
+import 'package:rive_animations/src/core/providers/login-form-provider.dart';
+import 'package:rive_animations/src/core/widgets/acp-widgets.dart';
+import 'package:rive_animations/src/screen/login/login-screen.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

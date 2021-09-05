@@ -1,4 +1,4 @@
-import 'package:flare_animations/src/core/helpers/debouncer.dart';
+import 'package:rive_animations/src/core/helpers/debouncer.dart';
 import 'package:flutter/material.dart';
 
 class LoginFOrmProvider extends ChangeNotifier {
@@ -22,6 +22,8 @@ class LoginFOrmProvider extends ChangeNotifier {
 // getters and setters
   String get email => _email;
   set email(String value) {
+    _success = false;
+    _fail = false;
     this._email = value;
     this.stateMachineStatus = true;
     notifyListeners();

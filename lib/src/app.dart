@@ -1,4 +1,4 @@
-import 'package:flare_animations/src/routes/routes.dart';
+import 'package:rive_animations/src/routes/routes.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
