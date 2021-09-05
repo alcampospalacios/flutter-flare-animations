@@ -51,7 +51,7 @@ class LoginScreen extends StatelessWidget {
                         height: 36,
                       )),
                 ),
-                Text("OR"),
+                Text("Or"),
                 Expanded(
                   child: new Container(
                       margin: const EdgeInsets.only(left: 20.0, right: 10.0),

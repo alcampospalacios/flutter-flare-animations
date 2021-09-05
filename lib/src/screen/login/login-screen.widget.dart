@@ -37,6 +37,11 @@ class _RiveAnimationContainerState extends State<_RiveAnimationContainer> {
   bool? coveredEyes;
   bool success = false;
   bool fail = false;
+  bool _handlerSM = false;
+
+// State machine controller
+  SMIInput<double>? _lookInput;
+  SMIBool? _check;
 
 // Animation controller
   late RiveAnimationController _animationController;
@@ -53,11 +58,28 @@ class _RiveAnimationContainerState extends State<_RiveAnimationContainer> {
     final bytes = await rootBundle.load(riveFileName);
     RiveFile rFile = RiveFile.import(bytes);
 
-    setState(() => _artboard = rFile.mainArtboard
+    final artboard = rFile.mainArtboard;
+    _onRiveInit(artboard);
+
+    setState(() => _artboard = artboard
       ..addController(
         _animationController = SimpleAnimation('idle'),
       ));
   }
+
+  // Getting state machine
+  void _onRiveInit(Artboard artboard) {
+    final controller =
+        StateMachineController.fromArtboard(artboard, 'State Machine 1');
+
+    if (controller != null) {
+      artboard.addController(controller);
+      _check = controller.findInput<bool>('Check') as SMIBool;
+      _lookInput = controller.findInput('Look');
+    }
+  }
+
+  void _onHandlerStateMachine() => _check?.value = !_check!.value;
 
 // Changing the animation on controller
   void onChange() {
@@ -105,6 +127,15 @@ class _RiveAnimationContainerState extends State<_RiveAnimationContainer> {
       this.fail = loginForm.fail;
       onSuccessOrFailAnimation();
     }
+
+    // listen to handler state machine
+    if (loginForm.stateMachineStatus != _handlerSM) {
+      _handlerSM = loginForm.stateMachineStatus;
+      _onHandlerStateMachine();
+    }
+
+// To move the look of teddy
+    _lookInput?.value = loginForm.email.length * 5;
 
     return Container(
         width: double.infinity,

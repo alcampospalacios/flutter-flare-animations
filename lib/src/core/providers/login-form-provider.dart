@@ -16,10 +16,20 @@ class LoginFOrmProvider extends ChangeNotifier {
   bool _fail = false;
   bool? coveredEyes;
 
+  // stateMachine
+  bool stateMachineStatus = false;
+
 // getters and setters
   String get email => _email;
   set email(String value) {
     this._email = value;
+    this.stateMachineStatus = true;
+    notifyListeners();
+
+    _debouncer.run(() {
+      this.stateMachineStatus = false;
+      notifyListeners();
+    });
   }
 
   String get password => _password;
