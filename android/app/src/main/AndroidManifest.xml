@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.alcampospalacios.flare_animations">
+    package="com.alcampospalacios.rive_animations">
    <application
         android:label="interactive_login"
         android:icon="@mipmap/ic_launcher">

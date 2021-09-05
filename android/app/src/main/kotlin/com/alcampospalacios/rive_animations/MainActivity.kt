@@ -1,4 +1,4 @@
-package com.alcampospalacios.flare_animations
+package com.alcampospalacios.rive_animations
 
 import io.flutter.embedding.android.FlutterActivity
 
