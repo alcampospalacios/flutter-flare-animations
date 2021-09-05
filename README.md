@@ -11,7 +11,9 @@
 ## Used Packages
 
 - rive: ^0.7.28
-- flare_flutter
+- flare_flutter: ^2.0.6
+- provider: ^6.0.0
+- font_awesome_flutter: ^9.1.0
 
 ## Resources
 
