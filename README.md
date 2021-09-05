@@ -25,7 +25,7 @@
 1. First clone the repo:
 
 ```bash
-git clone https://github.com/alcampospalacios/flutter-flare-animations.git
+git clone https://github.com/alcampospalacios/flutter-rive-animations.git
 ```
 
 <br />
